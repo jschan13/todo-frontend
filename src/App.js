@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
@@ -23,12 +22,16 @@ function App() {
     setToken(res.data.token);
   };
 
-  const getTodos = useCallback(() => {
-    const res = axios.get(`${API}/todos`, {
+  const getTodos = useCallback(async () => {
+  try {
+    const res = await axios.get(`${API}/todos`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setTodos(res.data);
-  },[]);
+  } catch (err) {
+    console.error(err);
+  }
+}, [token]);
 
   const addTodo = async () => {
     await axios.post(
