@@ -14,18 +14,18 @@ function App() {
   console.log("API:", API);
 
   const register = async () => {
-    await axios.post(`${API}/auth/register`, { email, password });
+    await axios.post(`${API}/api/auth/register`, { email, password });
     alert("Registered! Now login.");
   };
 
   const login = async () => {
-    const res = await axios.post(`${API}/auth/login`, { email, password });
+    const res = await axios.post(`${API}/api/auth/login`, { email, password });
     setToken(res.data.token);
   };
 
   const getTodos = useCallback(async () => {
   try {
-    const res = await axios.get(`${API}/todos`, {
+    const res = await axios.get(`${API}/api/todos`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setTodos(res.data);
@@ -36,7 +36,7 @@ function App() {
 
   const addTodo = async () => {
     await axios.post(
-      `${API}/todos`,
+      `${API}/api/todos`,
       { title },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -46,7 +46,7 @@ function App() {
 
   const toggleTodo = async (id, completed) => {
     await axios.put(
-      `${API}/todos/${id}`,
+      `${API}/api/todos/${id}`,
       { completed: !completed },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -54,7 +54,7 @@ function App() {
   };
 
   const deleteTodo = async (id) => {
-    await axios.delete(`${API}/todos/${id}`, {
+    await axios.delete(`${API}/api//todos/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     getTodos();
@@ -62,7 +62,7 @@ function App() {
 
   const updateTodo = async () => {
     await axios.put(
-      `${API}/todos/${editId}`,
+      `${API}/api/todos/${editId}`,
       { title: editText },
       { headers: { Authorization: `Bearer ${token}` } }
     );
