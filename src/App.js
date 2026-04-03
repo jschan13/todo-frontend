@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import axios from "axios";
 
-const API = "https://completetodoapi.onrender.com/api";
+const API = process.env.REACT_APP_API_URL;
 
 function App() {
   const [email, setEmail] = useState("");
@@ -22,12 +23,12 @@ function App() {
     setToken(res.data.token);
   };
 
-  const getTodos = async () => {
-    const res = await axios.get(`${API}/todos`, {
+  const getTodos = useCallback(() => {
+    const res = axios.get(`${API}/todos`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setTodos(res.data);
-  };
+  },[]);
 
   const addTodo = async () => {
     await axios.post(
@@ -66,9 +67,9 @@ function App() {
     getTodos();
   };
 
-  useEffect(() => {
-    if (token) getTodos();
-  }, [token]);
+useEffect(() => {
+  getTodos();
+}, [getTodos]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center">
