@@ -11,6 +11,7 @@ function App() {
   const [title, setTitle] = useState("");
   const [editId, setEditId] = useState(null);
   const [editText, setEditText] = useState("");
+  console.log("API:", API);
 
   const register = async () => {
     await axios.post(`${API}/auth/register`, { email, password });
