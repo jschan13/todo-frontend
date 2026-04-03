@@ -54,7 +54,7 @@ function App() {
   };
 
   const deleteTodo = async (id) => {
-    await axios.delete(`${API}/api//todos/${id}`, {
+    await axios.delete(`${API}/api/todos/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     getTodos();
